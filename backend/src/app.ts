@@ -5,8 +5,11 @@ import morgan from "morgan";
 import config from "./config";
 
 import rootRouter from "./routes/rootRoutes";
-import { routeNotFound, errorHandler } from "./middleware/errorHandler";
 import userRouter from "./routes/userRoutes";
+import cartRouter from "./routes/cartRouter";
+import wishlistRouter from "./routes/wishlistRouter";
+
+import { routeNotFound, errorHandler } from "./middleware/errorHandler";
 
 const app = express();
 
@@ -25,6 +28,8 @@ app.use(morgan(config.nodeEnv === "development" ? "dev" : "tiny"));
 // Apply routes before error handling
 app.use("/", rootRouter);
 app.use("/user", userRouter);
+app.use("/cart", cartRouter);
+app.use("/wishlist", wishlistRouter);
 
 // Apply error handling last
 app.use(routeNotFound);
