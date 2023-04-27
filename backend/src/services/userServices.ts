@@ -2,6 +2,7 @@ import UserModel, { I_UserDocument } from "../models/UserModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import config from "../config";
+import { AppError, HttpCode } from "../types/AppError";
 
 export async function register(user: I_UserDocument): Promise<void> {
   try {
@@ -16,7 +17,10 @@ export async function login(user: I_UserDocument) {
     const foundUser = await UserModel.findOne({ email: user.email });
 
     if (!foundUser) {
-      throw new Error("email of user is not correct");
+      throw new AppError({
+        httpCode: HttpCode.NOT_FOUND,
+        description: "User you are looking for does not exist",
+      });
     }
 
     const isMatch = bcrypt.compareSync(user.password, foundUser.password);
@@ -35,7 +39,10 @@ export async function login(user: I_UserDocument) {
         token: token,
       };
     } else {
-      throw new Error("Password is not correct");
+      throw new AppError({
+        httpCode: HttpCode.UNAUTHORIZED,
+        description: "Wrong Password",
+      });
     }
   } catch (error) {
     throw error;

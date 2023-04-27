@@ -1,4 +1,8 @@
 import { check } from "express-validator";
+import jwt, { Secret, JwtPayload } from "jsonwebtoken";
+import { Request, Response, NextFunction } from "express";
+import config from "../config";
+import { AppError, HttpCode } from "../types/AppError";
 
 export const validateEmailPassword = [
   check("email", "Email Must Be a Valid Email Address")
@@ -16,3 +20,32 @@ export const validateEmailPassword = [
     .trim()
     .escape(),
 ];
+
+export const SECRET_KEY: Secret = config.jwt.secret;
+
+export interface CustomRequest extends Request {
+  token: string | JwtPayload;
+}
+
+export const auth = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const token = req.header("Authorization")?.replace("Bearer ", "");
+
+    if (!token) {
+      throw new AppError({
+        httpCode: HttpCode.UNAUTHORIZED,
+        description: "Please authenticate",
+      });
+    }
+
+    const decoded = jwt.verify(token, SECRET_KEY);
+    (req as CustomRequest).token = decoded;
+
+    next();
+  } catch (err) {
+    throw new AppError({
+      httpCode: HttpCode.UNAUTHORIZED,
+      description: "Please authenticate",
+    });
+  }
+};

@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import config from "../config";
 
-export const getRoot: RequestHandler = (req, res) => {
+export const getRootTest: RequestHandler = (req, res) => {
   res.status(200).json({
     name: config.name,
     description: config.description,
@@ -9,7 +9,7 @@ export const getRoot: RequestHandler = (req, res) => {
   });
 };
 
-export const postRoot: RequestHandler = (req, res) => {
+export const postRootTest: RequestHandler = (req, res) => {
   const json = req.body;
   res.json(json);
 };

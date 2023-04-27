@@ -1,9 +1,9 @@
 import express from "express";
-import { getRoot, postRoot } from "../controllers/rootController";
+import { getRootTest, postRootTest } from "../controllers/rootController";
 
 const rootRouter = express.Router();
 
-rootRouter.get("/", getRoot);
-rootRouter.post("/", postRoot);
+rootRouter.get("/test", getRootTest);
+rootRouter.post("/test", postRootTest);
 
 export default rootRouter;

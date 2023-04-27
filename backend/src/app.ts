@@ -20,7 +20,7 @@ app.use(
   })
 );
 // app.use(helmet());
-app.use(morgan("tiny"));
+app.use(morgan(config.nodeEnv === "development" ? "dev" : "tiny"));
 
 // Apply routes before error handling
 app.use("/", rootRouter);
