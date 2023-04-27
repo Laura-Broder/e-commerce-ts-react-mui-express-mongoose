@@ -1,9 +1,9 @@
 import express from "express";
 import { getRoot, postRoot } from "../controllers/rootController";
 
-const root = express.Router();
+const rootRouter = express.Router();
 
-root.get("/", getRoot);
-root.post("/", postRoot);
+rootRouter.get("/", getRoot);
+rootRouter.post("/", postRoot);
 
-export default root;
+export default rootRouter;

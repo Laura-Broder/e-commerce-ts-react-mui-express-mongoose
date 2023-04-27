@@ -4,8 +4,9 @@ import express from "express";
 import morgan from "morgan";
 import config from "./config";
 
-import root from "./routes/rootRoutes";
-import { fourOhFour, errorHandler } from "./middleware/errorHandler";
+import rootRouter from "./routes/rootRoutes";
+import { routeNotFound, errorHandler } from "./middleware/errorHandler";
+import userRouter from "./routes/userRoutes";
 
 const app = express();
 
@@ -15,17 +16,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     // @ts-ignore
-    // origin: config.clientOrigins[config.nodeEnv],
+    origin: config.clientOrigins[config.nodeEnv],
   })
 );
 // app.use(helmet());
 app.use(morgan("tiny"));
 
 // Apply routes before error handling
-app.use("/", root);
+app.use("/", rootRouter);
+app.use("/user", userRouter);
 
 // Apply error handling last
-app.use(fourOhFour);
+app.use(routeNotFound);
 app.use(errorHandler);
 
 export default app;

@@ -1,16 +1,20 @@
-import { config } from "dotenv";
-import express, { Application, NextFunction, Request, Response } from "express";
+import mongoose from "mongoose";
+import app from "./src/app";
+import config from "./src/config";
 
-config();
+app.listen(config.port, async () => {
+  console.log(`🚀 ${config.name} ${config.version} 🚀`);
 
-const app: Application = express();
-
-app.get("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("Express server with TypeScript");
-});
-
-const PORT = process.env.PORT || 8080;
-
-app.listen(PORT, () => {
-  console.log(`Server is listening on port http://localhost:${PORT}`);
+  await mongoose
+    .connect(config.mongoUri)
+    .then(() => {
+      console.log("db connected successfully on port " + config.port);
+    })
+    .catch((err) => {
+      console.log("db failed to connect: ", err);
+      throw err;
+    });
+  console.log(
+    `🚀 Listening on http://localhost:${config.port} with NODE_ENV=${config.nodeEnv} 🚀`
+  );
 });
