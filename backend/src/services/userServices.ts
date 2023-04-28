@@ -1,12 +1,24 @@
-import UserModel, { I_UserDocument } from "../models/UserModel";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import config from "../config";
-import { AppError, HttpCode } from "../types/AppError";
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import config from '../config';
+import UserModel, { I_UserDocument } from '../models/UserModel';
+import { AppError, HttpCode } from '../types/AppError';
 
-export async function register(user: I_UserDocument): Promise<void> {
+export async function register(user: I_UserDocument) {
   try {
-    await UserModel.create(user);
+    const newUser = await UserModel.create(user);
+    const token = jwt.sign(
+      { _id: newUser._id?.toString(), email: newUser.email },
+      config.jwt.secret,
+      {
+        expiresIn: "2 days",
+      }
+    );
+
+    return {
+      user: { _id: newUser._id?.toString(), email: newUser.email },
+      token: token,
+    };
   } catch (error) {
     throw error;
   }
@@ -19,7 +31,7 @@ export async function login(user: I_UserDocument) {
     if (!foundUser) {
       throw new AppError({
         httpCode: HttpCode.NOT_FOUND,
-        description: "User you are looking for does not exist",
+        description: "User does not exist",
       });
     }
 

@@ -1,5 +1,6 @@
-import axios from "axios";
-import config from "../config";
+import axios from 'axios';
+import config from '../config';
+import { IPlantListQueryParams } from '../types/ApiData';
 
 const perenualApi = axios.create({
   baseURL: config.perenualApi.baseUrl,
@@ -7,18 +8,6 @@ const perenualApi = axios.create({
     key: config.perenualApi.apiKey,
   },
 });
-
-interface IPlantListQueryParams {
-  page?: number;
-  q?: string;
-  edible?: boolean | null;
-  poisonous?: boolean | null;
-  cycle?: "perennial" | "annual" | "biennial" | "biannual";
-  watering?: "frequent" | "average" | "minimum" | "none";
-  sunlight?: "full_shade" | "part_shade" | "sun-part_shade" | "full_sun";
-  indoor?: boolean | null;
-  hardiness?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13;
-}
 
 export const getPlantsList = (params: IPlantListQueryParams) => {
   const url = "/species-list";

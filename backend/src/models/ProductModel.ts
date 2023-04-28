@@ -1,4 +1,4 @@
-import { Document, Schema, Types, model } from "mongoose";
+import { Document, model, Schema, Types } from 'mongoose';
 
 export interface I_Product extends Document {
   _id: Types.ObjectId;

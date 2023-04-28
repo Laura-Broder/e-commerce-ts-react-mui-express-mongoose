@@ -1,5 +1,6 @@
-import express from "express";
-import { auth } from "../middleware/userValidator";
+import express from 'express';
+import { auth } from '../middleware/userValidator';
+
 const wishlistRouter = express.Router();
 
 wishlistRouter.patch("/:productId", auth);

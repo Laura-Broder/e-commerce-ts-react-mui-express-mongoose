@@ -1,6 +1,6 @@
-import express from "express";
-import { auth, validateEmailPassword } from "../middleware/userValidator";
-import { loginUser, registerUser } from "../controllers/userController";
+import express from 'express';
+import { loginUser, registerUser } from '../controllers/userController';
+import { auth, validateEmailPassword } from '../middleware/userValidator';
 
 const userRouter = express.Router();
 

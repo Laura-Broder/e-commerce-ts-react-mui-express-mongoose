@@ -1,5 +1,5 @@
-import { RequestHandler } from "express";
-import config from "../config";
+import { RequestHandler } from 'express';
+import config from '../config';
 
 export const getRootTest: RequestHandler = (req, res) => {
   res.status(200).json({

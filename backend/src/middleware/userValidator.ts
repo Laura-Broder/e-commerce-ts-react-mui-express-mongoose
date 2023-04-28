@@ -1,16 +1,16 @@
-import { check } from "express-validator";
-import jwt, { Secret, JwtPayload } from "jsonwebtoken";
-import { Request, Response, NextFunction } from "express";
-import config from "../config";
-import { AppError, HttpCode } from "../types/AppError";
+import { NextFunction, Request, Response } from 'express';
+import { body } from 'express-validator';
+import jwt, { JwtPayload, Secret } from 'jsonwebtoken';
+import config from '../config';
+import { AppError, HttpCode } from '../types/AppError';
 
 export const validateEmailPassword = [
-  check("email", "Email Must Be a Valid Email Address")
+  body("email", "Email Must Be a Valid Email Address")
     .isEmail()
     .trim()
     .escape()
     .normalizeEmail(),
-  check("password")
+  body("password")
     .isLength({ min: 8 })
     .withMessage("Password Must Be at Least 8 Characters")
     .matches("[0-9]")

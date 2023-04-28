@@ -1,13 +1,6 @@
-import {
-  ErrorRequestHandler,
-  RequestHandler,
-  Request,
-  Response,
-  NextFunction,
-} from "express";
-import config from "../config";
-import { AppError, HttpCode } from "../types/AppError";
-import { Result } from "express-validator";
+import { NextFunction, Request, RequestHandler, Response } from 'express';
+import { Result } from 'express-validator';
+import { AppError, HttpCode } from '../types/AppError';
 
 export function getErrorMessage(error: unknown) {
   if (error instanceof Error) return error.message;
@@ -77,3 +70,32 @@ export const getErrorMessageFromValidatorResults = (
     .array()
     .join(", ");
 };
+
+export function parseMongoError(error: Error) {
+  let status = 500;
+  let message = "Internal server error";
+
+  switch (error.name) {
+    case "ValidationError":
+      status = 400;
+      message = "Validation error";
+      break;
+    case "CastError":
+      status = 400;
+      message = "Invalid request parameter";
+      break;
+    case "MongoServerError":
+      if ((error as any).code === 11000) {
+        status = 409;
+        message = "Duplicate key error";
+      }
+      break;
+    default:
+      break;
+  }
+
+  return new AppError({
+    httpCode: status,
+    description: message,
+  });
+}

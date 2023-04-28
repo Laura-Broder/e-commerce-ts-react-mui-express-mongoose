@@ -1,15 +1,14 @@
-import cors from "cors";
-import express from "express";
+import cors from 'cors';
+import express from 'express';
 // import helmet from "helmet";
-import morgan from "morgan";
-import config from "./config";
-
-import rootRouter from "./routes/rootRoutes";
-import userRouter from "./routes/userRoutes";
-import cartRouter from "./routes/cartRouter";
-import wishlistRouter from "./routes/wishlistRouter";
-
-import { routeNotFound, errorHandler } from "./middleware/errorHandler";
+import morgan from 'morgan';
+import config from './config';
+import { errorHandler, routeNotFound } from './middleware/errorHandler';
+import cartRouter from './routes/cartRouter';
+import productsRouter from './routes/productsRouter';
+import rootRouter from './routes/rootRoutes';
+import userRouter from './routes/userRoutes';
+import wishlistRouter from './routes/wishlistRouter';
 
 const app = express();
 
@@ -28,6 +27,7 @@ app.use(morgan(config.nodeEnv === "development" ? "dev" : "tiny"));
 // Apply routes before error handling
 app.use("/", rootRouter);
 app.use("/user", userRouter);
+app.use("/products", productsRouter);
 app.use("/cart", cartRouter);
 app.use("/wishlist", wishlistRouter);
 

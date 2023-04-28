@@ -1,6 +1,6 @@
-import { Document, Schema, Types, model } from "mongoose";
-import bcrypt from "bcrypt";
-import { I_Product } from "./ProductModel";
+import bcrypt from 'bcrypt';
+import { Document, model, Schema, Types } from 'mongoose';
+import { I_Product } from './ProductModel';
 
 const saltRounds = 8;
 

@@ -1,3 +1,43 @@
+export const cycleOptions = [
+  "perennial",
+  "annual",
+  "biennial",
+  "biannual",
+] as const;
+export const wateringOptions = [
+  "frequent",
+  "average",
+  "minimum",
+  "none",
+] as const;
+
+export const sunlightOptions = [
+  "full_shade",
+  "part_shade",
+  "sun-part_shade",
+  "full_sun",
+] as const;
+export const hardnessOptions = [
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+] as const;
+
+export type CycleType = (typeof cycleOptions)[number];
+export type WateringType = (typeof wateringOptions)[number];
+export type SunlightType = (typeof sunlightOptions)[number];
+export type HardnessType = (typeof hardnessOptions)[number];
+
+export interface IPlantListQueryParams {
+  q: string;
+  page?: number;
+  edible?: boolean | null;
+  poisonous?: boolean | null;
+  cycle?: CycleType;
+  watering?: WateringType;
+  sunlight?: SunlightType;
+  indoor?: boolean | null;
+  hardiness?: HardnessType;
+}
+
 // https://perenual.com/api/species-list?page=1&key=[YOUR-API-KEY]
 // https://perenual.com/docs/api#:~:text=Online-,Plant%20List,-https%3A//perenual.com
 

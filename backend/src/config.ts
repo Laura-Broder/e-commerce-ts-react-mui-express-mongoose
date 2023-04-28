@@ -1,7 +1,7 @@
-import dotenv from "dotenv";
-dotenv.config();
-import packageJson from "../package.json";
+import dotenv from 'dotenv';
+import packageJson from '../package.json';
 
+dotenv.config();
 type ConfigType = {
   version: string;
   name: string;

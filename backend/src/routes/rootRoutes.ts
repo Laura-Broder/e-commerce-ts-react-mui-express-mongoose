@@ -1,5 +1,5 @@
-import express from "express";
-import { getRootTest, postRootTest } from "../controllers/rootController";
+import express from 'express';
+import { getRootTest, postRootTest } from '../controllers/rootController';
 
 const rootRouter = express.Router();
 
