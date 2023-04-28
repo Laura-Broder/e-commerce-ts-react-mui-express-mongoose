@@ -1,3 +1,9 @@
+export interface IListItem {
+  name: string;
+  imageUrl: string;
+  price: number;
+}
+
 export const cycleOptions = [
   "perennial",
   "annual",
@@ -41,37 +47,37 @@ export interface IPlantListQueryParams {
 // https://perenual.com/api/species-list?page=1&key=[YOUR-API-KEY]
 // https://perenual.com/docs/api#:~:text=Online-,Plant%20List,-https%3A//perenual.com
 
-export interface PlantList {
+export interface PlantListRes {
   data: Datum[];
-  to: number;
-  perPage: number;
-  currentPage: number;
-  from: number;
-  lastPage: number;
-  total: number;
+  to?: number;
+  per_page?: number;
+  current_page?: number;
+  from?: number;
+  last_page?: number;
+  total?: number;
 }
 
 export interface Datum {
   id: number;
-  commonName: string;
-  scientificName: string[];
-  otherName: string[] | null;
+  common_name: string;
+  scientific_name?: string[];
+  other_name?: string[] | null;
   cycle?: string;
   watering?: string;
-  sunlight: string[];
-  defaultImage: DefaultImage;
+  sunlight?: any[];
+  default_image?: DefaultImage;
 }
 
 export interface DefaultImage {
-  imageID: number;
-  license: number;
-  licenseName: string;
-  licenseURL: string;
-  originalURL: string;
-  regularURL: string;
-  mediumURL: string;
-  smallURL: string;
-  thumbnail: string;
+  image_id?: number;
+  license?: number;
+  license_name?: string;
+  license_url?: string;
+  original_url?: string;
+  regular_url?: string;
+  medium_url?: string;
+  small_url?: string;
+  thumbnail?: string;
 }
 
 //  https://perenual.com/api/species/details/[ID]?key=[YOUR-API-KEY]
@@ -79,9 +85,9 @@ export interface DefaultImage {
 
 export interface PlantDetails {
   id: number;
-  commonName: string;
-  scientificName: string[];
-  otherName: string[];
+  common_name: string;
+  scientific_name: string[];
+  other_name: string[];
   family?: string;
   origin?: null;
   type?: string;
@@ -91,52 +97,52 @@ export interface PlantDetails {
   attracts?: string[];
   propagation?: string[];
   hardiness?: Hardiness;
-  hardinessLocation?: HardinessLocation;
+  hardiness_location?: HardinessLocation;
   flowers?: boolean;
-  floweringSeason?: string;
+  flowering_season?: string;
   color?: string;
   sunlight?: string[];
   soil?: any[];
   problem?: string;
-  pestSusceptibility?: null;
+  pest_susceptibility?: null;
   cones?: boolean;
   fruits?: boolean;
-  edibleFruit?: boolean;
-  edibleFruitTasteProfile?: string;
-  fruitNutritionalValue?: string;
-  fruitColor?: null;
-  fruitingSeason?: null;
-  harvestSeason?: null;
-  harvestMethod?: string;
+  edible_fruit?: boolean;
+  edible_fruit_taste_profile?: string;
+  fruit_nutritional_value?: string;
+  fruit_color?: null;
+  fruiting_season?: null;
+  harvest_season?: null;
+  harvest_method?: string;
   leaf?: boolean;
-  leafColor?: string[];
-  edibleLeaf?: boolean;
-  edibleLeafTasteProfile?: string;
-  leafNutritionalValue?: string;
-  growthRate?: string;
+  leaf_color?: string[];
+  edible_leaf?: boolean;
+  edible_leaf_taste_profile?: string;
+  leaf_nutritional_value?: string;
+  growth_rate?: string;
   maintenance?: string;
   medicinal?: boolean;
-  medicinalUse?: string;
-  medicinalMethod?: string;
-  poisonousToHumans?: boolean;
-  poisonEffectsToHumans?: string;
-  poisonToHumansCure?: string;
-  poisonousToPets?: boolean;
-  poisonEffectsToPets?: string;
-  poisonToPetsCure?: string;
-  droughtTolerant?: boolean;
-  saltTolerant?: boolean;
+  medicinal_use?: string;
+  medicinal_method?: string;
+  poisonous_to_humans?: boolean;
+  poison_effects_to_humans?: string;
+  poison_to_humans_cure?: string;
+  poisonous_to_pets?: boolean;
+  poison_effects_to_pets?: string;
+  poison_to_pets_cure?: string;
+  drought_tolerant?: boolean;
+  salt_tolerant?: boolean;
   thorny?: boolean;
   invasive?: boolean;
   rare?: boolean;
-  rareLevel?: string;
+  rare_level?: string;
   tropical?: boolean;
   cuisine?: boolean;
-  cuisineList?: string;
+  cuisine_list?: string;
   indoor?: boolean;
-  careLevel?: string;
+  care_level?: string;
   description?: string;
-  defaultImage?: DefaultImage;
+  default_image?: DefaultImage;
 }
 
 export interface Hardiness {

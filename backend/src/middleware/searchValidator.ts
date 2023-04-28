@@ -1,9 +1,14 @@
-import { checkSchema } from 'express-validator';
-import { cycleOptions, hardnessOptions, sunlightOptions, wateringOptions } from '../types/ApiData';
+import { checkSchema } from "express-validator";
+import {
+  cycleOptions,
+  hardnessOptions,
+  sunlightOptions,
+  wateringOptions,
+} from "../types/ApiData";
 
 export const validateQuery = checkSchema(
   {
-    q: { exists: true },
+    q: { notEmpty: true },
     page: { optional: true, isNumeric: true },
     edible: { optional: true, isBoolean: true },
     poisonous: { optional: true, isBoolean: true },
