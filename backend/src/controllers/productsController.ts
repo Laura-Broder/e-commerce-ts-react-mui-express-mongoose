@@ -21,9 +21,13 @@ export const getProducts: RequestHandler = async (
     );
   } else {
     const params = req.query as unknown as IPlantListQueryParams;
-    const searchRes = await getPlantsList(params);
-    if (searchRes?.data) {
-      res.status(200).json(mapResData(searchRes.data));
+    try {
+      const searchRes = await getPlantsList(params);
+      if (searchRes?.data) {
+        res.status(200).json(mapResData(searchRes.data));
+      }
+    } catch (error) {
+      next(error);
     }
   }
 };
