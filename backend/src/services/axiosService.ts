@@ -51,6 +51,7 @@ const getImageUrl = (defaultImage: DefaultImage | undefined): string => {
 export const mapResData = (resData: PlantListRes) => {
   const data = resData.data.map((p: Datum): IListItem => {
     return {
+      id: p.id,
       name: getName(p),
       imageUrl: getImageUrl(p.default_image),
       price: 100,
