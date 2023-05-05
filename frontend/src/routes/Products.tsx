@@ -1,3 +1,4 @@
+import YardTwoToneIcon from "@mui/icons-material/YardTwoTone";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
@@ -13,7 +14,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useContext } from "react";
 import { appContext } from "../hooks/context";
 import { IListItem } from "../utils/types";
-
 type Props = {};
 
 const Products = (props: Props) => {
@@ -37,14 +37,21 @@ const Products = (props: Props) => {
         products?.data.map((item: IListItem) => (
           <Card key={item.id}>
             <CardActionArea>
-              <CardMedia
-                component="img"
-                height="140"
-                width="140"
-                src={`${item.imageUrl}?w=248&fit=crop&auto=format`}
-                srcSet={`${item.imageUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                alt={item.name}
-              />
+              {item.imageUrl ? (
+                <CardMedia
+                  component="img"
+                  height="140"
+                  width="140"
+                  src={`${item.imageUrl}?w=248&fit=crop&auto=format`}
+                  srcSet={`${item.imageUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                  alt={item.name}
+                />
+              ) : (
+                <CardMedia
+                  component={YardTwoToneIcon}
+                  sx={{ fontSize: 140, m: "auto" }}
+                />
+              )}
               <CardContent>
                 <Typography gutterBottom variant="caption" component="div">
                   {item.name}
