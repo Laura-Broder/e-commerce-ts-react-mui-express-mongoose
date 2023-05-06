@@ -36,7 +36,7 @@ const Products = (props: Props) => {
     setSearchResults(searchRes.data);
   };
   return (
-    <Stack spacing={2}>
+    <Stack spacing={3} p={3}>
       {searchResults?.last_page && searchResults?.last_page > 1 ? (
         <Pagination
           page={searchResults?.current_page}
@@ -50,13 +50,7 @@ const Products = (props: Props) => {
           }
         />
       ) : null}
-      <ImageList
-        gap={16}
-        cols={sm ? 4 : 2}
-        sx={{
-          px: 2,
-        }}
-      >
+      <ImageList gap={16} cols={sm ? 4 : 2}>
         {!searchResults?.data.length ? (
           <ImageListItem key="Subheader">
             <ListSubheader component="div">
