@@ -55,7 +55,7 @@ const ContextProvider = ({ children }: Props) => {
     (): void =>
       dispatch({
         type: "SET_USER",
-        payload: { user: initialState.user },
+        payload: { user: noUser },
       }),
     []
   );

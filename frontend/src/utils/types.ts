@@ -21,12 +21,18 @@ export interface IListItem {
 }
 export interface ICartItem extends IListItem {
   _id: string;
+  inCart: true;
+  quantity: number;
+}
+export interface IWishedItem extends IListItem {
+  _id: string;
+  wished: true;
 }
 export interface IUser {
   _id?: string;
   email?: string;
   cart?: ICartItem[];
-  wishlist?: ICartItem[];
+  wishlist?: IWishedItem[];
 }
 export enum AlertSeverityEnum {
   ERROR = "error",
