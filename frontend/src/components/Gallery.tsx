@@ -22,11 +22,11 @@ import { useContext, useState } from "react";
 import { appContext } from "../hooks/context";
 import useCart from "../hooks/useCart";
 import useWishlist from "../hooks/useWishlist";
-import { ICartItem, IListItem, IWishedItem } from "../utils/types";
+import { ProductType } from "../utils/types";
 import ProductPreview from "./ProductPreview";
 
 type Props = {
-  items?: IListItem[] | ICartItem[] | IWishedItem[];
+  items?: ProductType[];
 };
 
 const Gallery = ({ items }: Props) => {
@@ -57,7 +57,7 @@ const Gallery = ({ items }: Props) => {
             </ListSubheader>
           </ImageListItem>
         ) : (
-          items?.map((item: IListItem, index) => (
+          items?.map((item: ProductType, index) => (
             <Card key={item.id}>
               <CardActionArea>
                 {item.imageUrl ? (

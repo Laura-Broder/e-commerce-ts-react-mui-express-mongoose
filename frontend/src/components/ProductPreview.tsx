@@ -21,7 +21,7 @@ import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
 import useCart from "../hooks/useCart";
 import useWishlist from "../hooks/useWishlist";
-import { ICartItem, IListItem, IWishedItem } from "../utils/types";
+import { ProductType } from "../utils/types";
 
 const style = {
   position: "absolute" as "absolute",
@@ -37,7 +37,7 @@ const style = {
 type Props = {
   isOpen: boolean;
   close: VoidFunction;
-  item: IListItem | ICartItem | IWishedItem;
+  item: ProductType;
   showNext: VoidFunction | undefined;
   showPrev: VoidFunction | undefined;
   itemsCount: number;

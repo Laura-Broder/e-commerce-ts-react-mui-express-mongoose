@@ -28,6 +28,7 @@ export interface IWishedItem extends IListItem {
   _id: string;
   wished: true;
 }
+export type ProductType = IListItem | ICartItem | IWishedItem;
 export interface IUser {
   _id?: string;
   email?: string;
