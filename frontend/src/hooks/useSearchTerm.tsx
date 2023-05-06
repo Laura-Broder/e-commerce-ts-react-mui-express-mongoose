@@ -1,6 +1,5 @@
 import { useContext, useEffect } from "react";
-import { getRandomCharacter } from "../utils/helpers";
-import { appContext } from "./context";
+import { appContext, emptySearchResults } from "./context";
 import { useAxios } from "./useAxios";
 
 const useSearchTerm = () => {
@@ -8,15 +7,19 @@ const useSearchTerm = () => {
   const { get } = useAxios();
 
   useEffect(() => {
-    const getData = setTimeout(async () => {
-      const params = {
-        q: query || getRandomCharacter(),
-      };
-      const searchRes = await get("/products", params);
-      setSearchResults(searchRes.data);
-    }, 500);
+    if (!query) {
+      setSearchResults(emptySearchResults);
+    } else {
+      const getData = setTimeout(async () => {
+        const params = {
+          q: query,
+        };
+        const searchRes = await get("/products", params);
+        setSearchResults(searchRes.data);
+      }, 500);
 
-    return () => clearTimeout(getData);
+      return () => clearTimeout(getData);
+    }
   }, [get, setSearchResults, query]);
 
   return { query, setQuery };

@@ -16,28 +16,40 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { ChangeEvent, useContext } from "react";
 import { appContext } from "../hooks/context";
+import { useAxios } from "../hooks/useAxios";
 import { IListItem } from "../utils/types";
 
 type Props = {};
 
 const Products = (props: Props) => {
-  const { searchResults, isLoading } = useContext(appContext);
-  // const { setQuery } = useSearch();
+  const { searchResults, setSearchResults, query, isLoading } =
+    useContext(appContext);
+  const { get } = useAxios();
   const theme = useTheme();
   const sm = useMediaQuery(theme.breakpoints.up("sm"));
-  const handleChange = (event: ChangeEvent<unknown>, value: number) => {
-    // setQuery({ page: value });
-    console.log("file: Products.tsx:32 ~ handleChange ~ value:", value);
+  const getPage = async (_event: ChangeEvent<unknown>, page: number) => {
+    const params = {
+      q: query,
+      page,
+    };
+    const searchRes = await get("/products", params);
+    setSearchResults(searchRes.data);
   };
   return (
     <Stack spacing={2}>
-      <Pagination
-        page={searchResults?.current_page}
-        onChange={handleChange}
-        count={searchResults?.last_page}
-        showFirstButton
-        showLastButton
-      />
+      {searchResults?.last_page && searchResults?.last_page > 1 ? (
+        <Pagination
+          page={searchResults?.current_page}
+          onChange={getPage}
+          count={searchResults?.last_page}
+          showFirstButton={
+            !!searchResults?.last_page && searchResults?.last_page > 10
+          }
+          showLastButton={
+            !!searchResults?.last_page && searchResults?.last_page > 10
+          }
+        />
+      ) : null}
       <ImageList
         gap={16}
         cols={sm ? 4 : 2}

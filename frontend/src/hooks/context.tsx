@@ -9,18 +9,19 @@ interface IContextState extends IState {
   setSearchResults: (res: PlantListRes) => void;
 }
 
-const initialState: IContextState = {
+export const emptySearchResults: PlantListRes = {
+  data: [],
+  to: null,
+  per_page: 30,
+  current_page: 1,
+  from: null,
+  last_page: 1,
+  total: 0,
+};
+export const initialState: IContextState = {
   user: { _id: "", email: "", cart: [], wishlist: [] },
   query: "",
-  searchResults: {
-    data: [],
-    to: null,
-    per_page: 30,
-    current_page: 1,
-    from: null,
-    last_page: 1,
-    total: 0,
-  },
+  searchResults: emptySearchResults,
   setQuery: (_query: string) => {},
   setUser: (_user: IUser) => {},
   clearUser: () => {},
