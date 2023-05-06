@@ -2,6 +2,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import YardTwoToneIcon from "@mui/icons-material/YardTwoTone";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
@@ -13,20 +14,29 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ListSubheader from "@mui/material/ListSubheader";
 import Skeleton from "@mui/material/Skeleton";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { appContext } from "../hooks/context";
 import useCart from "../hooks/useCart";
 import useWishlist from "../hooks/useWishlist";
 import { ICartItem, IListItem, IWishedItem } from "../utils/types";
+import ProductPreview from "./ProductPreview";
 
 type Props = {
   items?: IListItem[] | ICartItem[] | IWishedItem[];
 };
 
 const Gallery = ({ items }: Props) => {
+  const [itemToPreview, setItemToPreview] = useState<number | undefined>(
+    undefined
+  );
+  const canShowNext = (i: number) =>
+    items?.length ? i + 1 < items?.length : false;
+  const canShowPrev = (i: number) => i > 0;
+
   const { isLoading } = useContext(appContext);
   const { getItemQuantity, addToCart, removeFromCart } = useCart();
   const { isWished, addToWishlist, removeFromWishlist } = useWishlist();
@@ -34,82 +44,122 @@ const Gallery = ({ items }: Props) => {
   const sm = useMediaQuery(theme.breakpoints.up("sm"));
 
   return (
-    <ImageList gap={16} cols={sm ? 4 : 2}>
-      {!items?.length ? (
-        <ImageListItem key="Subheader">
-          <ListSubheader component="div">
-            {isLoading ? (
-              <Skeleton width={"100%"} />
-            ) : (
-              <Typography variant="body1">No Results</Typography>
-            )}
-          </ListSubheader>
-        </ImageListItem>
-      ) : (
-        items?.map((item: IListItem) => (
-          <Card key={item.id}>
-            <CardActionArea>
-              {item.imageUrl ? (
-                <CardMedia
-                  component="img"
-                  height="140"
-                  width="140"
-                  src={`${item.imageUrl}?w=248&fit=crop&auto=format`}
-                  srcSet={`${item.imageUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                  alt={item.name}
-                />
+    <>
+      <ImageList gap={16} cols={sm ? 4 : 2}>
+        {!items?.length ? (
+          <ImageListItem key="Subheader">
+            <ListSubheader component="div">
+              {isLoading ? (
+                <Skeleton width={"100%"} />
               ) : (
-                <CardMedia
-                  component={YardTwoToneIcon}
-                  sx={{ fontSize: 140, m: "auto" }}
-                />
+                <Typography variant="body1">No Results</Typography>
               )}
-              <CardContent>
-                <Typography gutterBottom variant="caption" component="div">
-                  {item.name}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-            <CardActions>
-              {getItemQuantity(item.id) ? (
+            </ListSubheader>
+          </ImageListItem>
+        ) : (
+          items?.map((item: IListItem, index) => (
+            <Card key={item.id}>
+              <CardActionArea>
+                {item.imageUrl ? (
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    width="140"
+                    src={`${item.imageUrl}?w=248&fit=crop&auto=format`}
+                    srcSet={`${item.imageUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                    alt={item.name}
+                  />
+                ) : (
+                  <CardMedia
+                    component={YardTwoToneIcon}
+                    sx={{ fontSize: 140, m: "auto" }}
+                  />
+                )}
+                <CardContent>
+                  <Typography gutterBottom variant="caption" component="div">
+                    {item.name}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+              <CardActions
+                sx={{
+                  justifyContent: "space-between",
+                }}
+              >
+                {getItemQuantity(item.id) ? (
+                  <IconButton
+                    color="primary"
+                    aria-label="remove from shopping cart"
+                    onClick={() => removeFromCart(item.id)}
+                  >
+                    <Tooltip title="remove from cart" arrow>
+                      <RemoveShoppingCartIcon />
+                    </Tooltip>
+                  </IconButton>
+                ) : (
+                  <IconButton
+                    color="primary"
+                    aria-label="add to shopping cart"
+                    onClick={() => addToCart(item)}
+                  >
+                    <Tooltip title="add to cart" arrow>
+                      <AddShoppingCartIcon />
+                    </Tooltip>
+                  </IconButton>
+                )}
+                {isWished(item.id) ? (
+                  <IconButton
+                    color="primary"
+                    aria-label="remove from wishlist"
+                    onClick={() => removeFromWishlist(item.id)}
+                  >
+                    <Tooltip title="remove from wishlist" arrow>
+                      <FavoriteIcon />
+                    </Tooltip>
+                  </IconButton>
+                ) : (
+                  <IconButton
+                    color="primary"
+                    aria-label="add to wishlist"
+                    onClick={() => addToWishlist(item)}
+                  >
+                    <Tooltip title="add to wishlist" arrow>
+                      <FavoriteBorderIcon />
+                    </Tooltip>
+                  </IconButton>
+                )}
                 <IconButton
                   color="primary"
-                  aria-label="remove from shopping cart"
-                  onClick={() => removeFromCart(item.id)}
+                  aria-label="preview item"
+                  onClick={() => setItemToPreview(index)}
                 >
-                  <RemoveShoppingCartIcon />
+                  <Tooltip title="show item preview" arrow>
+                    <VisibilityOutlinedIcon />
+                  </Tooltip>
                 </IconButton>
-              ) : (
-                <IconButton
-                  color="primary"
-                  aria-label="add to shopping cart"
-                  onClick={() => addToCart(item)}
-                >
-                  <AddShoppingCartIcon />
-                </IconButton>
-              )}
-              {isWished(item.id) ? (
-                <IconButton
-                  color="primary"
-                  aria-label="remove from wishlist"
-                  onClick={() => removeFromWishlist(item.id)}
-                >
-                  <FavoriteIcon />
-                </IconButton>
-              ) : (
-                <IconButton
-                  color="primary"
-                  aria-label="add to wishlist"
-                  onClick={() => addToWishlist(item)}
-                >
-                  <FavoriteBorderIcon />
-                </IconButton>
-              )}
-            </CardActions>
-          </Card>
-        ))
-      )}
-    </ImageList>
+              </CardActions>
+              <ProductPreview
+                isOpen={itemToPreview === index}
+                close={() => setItemToPreview(undefined)}
+                item={item}
+                showNext={
+                  canShowNext(index)
+                    ? () => setItemToPreview(index + 1)
+                    : undefined
+                }
+                showPrev={
+                  canShowPrev(index)
+                    ? () => setItemToPreview(index - 1)
+                    : undefined
+                }
+                itemsCount={items.length}
+                index={index}
+              />
+            </Card>
+          ))
+        )}
+      </ImageList>
+    </>
   );
 };
 
