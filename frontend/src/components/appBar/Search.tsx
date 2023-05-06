@@ -2,7 +2,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import { alpha, styled } from "@mui/material/styles";
 import { ChangeEvent } from "react";
-import useSearchTerm from "../hooks/useSearchTerm";
+import useSearchTerm from "../../hooks/useSearchTerm";
 
 const StyledSearchForm = styled("form")(({ theme }) => ({
   position: "relative",

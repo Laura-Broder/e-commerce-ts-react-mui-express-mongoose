@@ -11,14 +11,11 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
 import { MouseEvent, useState } from "react";
 import { Link } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 import NavDrawer from "./NavDrawer";
 import Search from "./Search";
-
-const OffsetFixedAppBar = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 export default function PrimaryAppBar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -235,7 +232,6 @@ export default function PrimaryAppBar() {
           </Box>
         </Toolbar>
       </AppBar>
-      <OffsetFixedAppBar />
       {renderMobileMenu}
       {renderMenu}
     </Box>
