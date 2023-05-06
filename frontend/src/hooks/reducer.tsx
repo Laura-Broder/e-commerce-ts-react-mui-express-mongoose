@@ -1,8 +1,8 @@
 import { deepCopy } from "../utils/helpers";
-import { Action, IState } from "../utils/types";
+import { IAction, IState } from "../utils/types";
 
-const reducer = (state: IState, action: Action): IState => {
-  const newState = deepCopy(state);
+const reducer = (state: IState, action: IAction): IState => {
+  const newState: IState = deepCopy(state);
   switch (action.type) {
     case "SET_USER":
       newState.user = action.payload?.user;
@@ -12,6 +12,9 @@ const reducer = (state: IState, action: Action): IState => {
       break;
     case "SET_SEARCH_RESULTS":
       newState.searchResults = action.payload?.searchResults;
+      break;
+    case "SET_GLOBAL_ALERT":
+      newState.globalAlert = action.payload?.globalAlert;
       break;
     default:
       break;

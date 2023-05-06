@@ -1,12 +1,10 @@
 import { useCallback, useContext, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import { removeJWT, setJWT } from "../utils/auth";
 import { AxiosInstance } from "../utils/axios";
 import { ISingInFormState } from "../utils/types";
 import { appContext } from "./context";
 
 const useAuth = () => {
-  const navigate = useNavigate();
   const { user, setUser, clearUser } = useContext(appContext);
   const login = useCallback(
     async (data: ISingInFormState) => {
@@ -14,10 +12,9 @@ const useAuth = () => {
       if (loginRes?.data) {
         setUser(loginRes.data.user);
         setJWT(loginRes.data.token);
-        navigate("/");
       }
     },
-    [navigate, setUser]
+    [setUser]
   );
   const register = useCallback(
     async (data: ISingInFormState) => {
@@ -25,10 +22,9 @@ const useAuth = () => {
       if (registerRes?.data) {
         setUser(registerRes.data.user);
         setJWT(registerRes.data.token);
-        navigate("/");
       }
     },
-    [navigate, setUser]
+    [setUser]
   );
   const logout = useCallback(() => {
     clearUser();

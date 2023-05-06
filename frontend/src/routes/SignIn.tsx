@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 // import FormControlLabel from "@mui/material/FormControlLabel";
 // import Checkbox from "@mui/material/Checkbox";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -15,6 +15,7 @@ import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import useAuth from "../hooks/useAuth";
+import useGlobalAlert, { GlobalAlertTypesEnum } from "../hooks/useGlobalAlert";
 import { emailPasswordValidationSchema } from "../utils/auth";
 import { ISingInFormState } from "../utils/types";
 
@@ -41,8 +42,12 @@ interface Props {
 }
 
 export default function SignIn({ isSignUp }: Props) {
+  const { showAlertByType } = useGlobalAlert();
+  const navigate = useNavigate();
+
   const [submitError, setSubmitError] = useState("");
   const { login, register } = useAuth();
+
   useEffect(() => {
     let timeout = setTimeout(() => setSubmitError(""), 5000);
     return () => {
@@ -57,13 +62,15 @@ export default function SignIn({ isSignUp }: Props) {
     },
     validationSchema: emailPasswordValidationSchema,
     onSubmit: async ({ email, password }: ISingInFormState) => {
-      console.log({ email, password });
       try {
         if (isSignUp) {
           await register({ email, password });
         } else {
           await login({ email, password });
         }
+        showAlertByType(GlobalAlertTypesEnum.LOGIN_SUCCESS, 5000, () =>
+          navigate("/")
+        );
       } catch (error) {
         if (error instanceof AxiosError) {
           if (error?.response?.status === 409)

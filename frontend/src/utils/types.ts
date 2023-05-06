@@ -3,7 +3,7 @@ export interface ISingInFormState {
   password: string;
 }
 
-export interface PlantListRes {
+export interface IPlantListRes {
   data: IListItem[];
   to?: number | null;
   per_page?: number;
@@ -28,15 +28,28 @@ export interface IUser {
   cart?: ICartItem[];
   wishlist?: ICartItem[];
 }
+export enum AlertSeverityEnum {
+  ERROR = "error",
+  WARNING = "warning",
+  INFO = "info",
+  SUCCESS = "success",
+}
 
+export interface IGlobalAlert {
+  show?: boolean;
+  type?: AlertSeverityEnum;
+  title?: string;
+  content?: string;
+}
 export interface IState {
   query?: string;
   user?: IUser;
-  searchResults?: PlantListRes;
+  searchResults?: IPlantListRes;
   isLoading?: boolean;
+  globalAlert?: IGlobalAlert;
 }
 
-export interface Action {
+export interface IAction {
   type: string;
   payload?: IState;
 }

@@ -1,15 +1,16 @@
 import { createContext, ReactNode, useCallback, useReducer } from "react";
-import { IState, IUser, PlantListRes } from "../utils/types";
+import { IGlobalAlert, IPlantListRes, IState, IUser } from "../utils/types";
 import reducer from "./reducer";
 
 interface IContextState extends IState {
   setUser: (user: IUser) => void;
   clearUser: VoidFunction;
   setQuery: (query: string) => void;
-  setSearchResults: (res: PlantListRes) => void;
+  setSearchResults: (res: IPlantListRes) => void;
+  setGlobalAlert: (alert: IGlobalAlert) => void;
+  removeGlobalAlert: VoidFunction;
 }
-
-export const emptySearchResults: PlantListRes = {
+export const emptySearchResults: IPlantListRes = {
   data: [],
   to: null,
   per_page: 30,
@@ -18,14 +19,19 @@ export const emptySearchResults: PlantListRes = {
   last_page: 1,
   total: 0,
 };
+export const noUser: IUser = { _id: "", email: "", cart: [], wishlist: [] };
+export const noGlobalAlert: IGlobalAlert = { show: false };
 export const initialState: IContextState = {
-  user: { _id: "", email: "", cart: [], wishlist: [] },
+  user: noUser,
   query: "",
   searchResults: emptySearchResults,
+  globalAlert: noGlobalAlert,
   setQuery: (_query: string) => {},
   setUser: (_user: IUser) => {},
   clearUser: () => {},
-  setSearchResults: (_res: PlantListRes) => {},
+  setSearchResults: (_res: IPlantListRes) => {},
+  setGlobalAlert: (_a: IGlobalAlert) => {},
+  removeGlobalAlert: () => {},
 };
 
 export const appContext = createContext<IContextState>(initialState);
@@ -36,7 +42,7 @@ interface Props {
 
 const ContextProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { user, query, searchResults } = state;
+  const { user, query, searchResults, globalAlert } = state;
   const setUser = useCallback(
     (newUser: IUser): void =>
       dispatch({
@@ -62,10 +68,26 @@ const ContextProvider = ({ children }: Props) => {
     []
   );
   const setSearchResults = useCallback(
-    (searchRes: PlantListRes): void =>
+    (searchRes: IPlantListRes): void =>
       dispatch({
         type: "SET_SEARCH_RESULTS",
         payload: { searchResults: searchRes },
+      }),
+    []
+  );
+  const setGlobalAlert = useCallback(
+    (alert: IGlobalAlert): void =>
+      dispatch({
+        type: "SET_GLOBAL_ALERT",
+        payload: { globalAlert: alert },
+      }),
+    []
+  );
+  const removeGlobalAlert = useCallback(
+    (): void =>
+      dispatch({
+        type: "SET_GLOBAL_ALERT",
+        payload: { globalAlert: noGlobalAlert },
       }),
     []
   );
@@ -76,10 +98,13 @@ const ContextProvider = ({ children }: Props) => {
         user,
         query,
         searchResults,
+        globalAlert,
         setQuery,
         setUser,
         clearUser,
         setSearchResults,
+        setGlobalAlert,
+        removeGlobalAlert,
       }}
     >
       {children}
