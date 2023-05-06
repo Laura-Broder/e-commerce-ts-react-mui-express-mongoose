@@ -5,12 +5,14 @@ import reducer from "./reducer";
 interface IContextState extends IState {
   setUser: (user: IUser) => void;
   clearUser: VoidFunction;
-  setProducts: (products: PlantListRes) => void;
+  setQuery: (query: string) => void;
+  setSearchResults: (res: PlantListRes) => void;
 }
 
 const initialState: IContextState = {
   user: { _id: "", email: "", cart: [], wishlist: [] },
-  products: {
+  query: "",
+  searchResults: {
     data: [],
     to: null,
     per_page: 30,
@@ -19,9 +21,10 @@ const initialState: IContextState = {
     last_page: 1,
     total: 0,
   },
+  setQuery: (_query: string) => {},
   setUser: (_user: IUser) => {},
   clearUser: () => {},
-  setProducts: (_products: PlantListRes) => {},
+  setSearchResults: (_res: PlantListRes) => {},
 };
 
 export const appContext = createContext<IContextState>(initialState);
@@ -32,7 +35,7 @@ interface Props {
 
 const ContextProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { user, products } = state;
+  const { user, query, searchResults } = state;
   const setUser = useCallback(
     (newUser: IUser): void =>
       dispatch({
@@ -49,12 +52,19 @@ const ContextProvider = ({ children }: Props) => {
       }),
     []
   );
-
-  const setProducts = useCallback(
-    (newProducts: PlantListRes): void =>
+  const setQuery = useCallback(
+    (query: string): void =>
       dispatch({
-        type: "SET_PRODUCTS",
-        payload: { products: newProducts },
+        type: "SET_QUERY",
+        payload: { query },
+      }),
+    []
+  );
+  const setSearchResults = useCallback(
+    (searchRes: PlantListRes): void =>
+      dispatch({
+        type: "SET_SEARCH_RESULTS",
+        payload: { searchResults: searchRes },
       }),
     []
   );
@@ -63,10 +73,12 @@ const ContextProvider = ({ children }: Props) => {
     <appContext.Provider
       value={{
         user,
-        products,
+        query,
+        searchResults,
+        setQuery,
         setUser,
         clearUser,
-        setProducts,
+        setSearchResults,
       }}
     >
       {children}

@@ -30,8 +30,10 @@ export interface IUser {
 }
 
 export interface IState {
+  query?: string;
   user?: IUser;
-  products?: PlantListRes;
+  searchResults?: PlantListRes;
+  isLoading?: boolean;
 }
 
 export interface Action {

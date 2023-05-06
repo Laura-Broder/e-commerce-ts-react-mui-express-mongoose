@@ -2,7 +2,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import { alpha, styled } from "@mui/material/styles";
 import { ChangeEvent } from "react";
-import useSearch from "../hooks/useSearch";
+import useSearchTerm from "../hooks/useSearchTerm";
 
 const StyledSearchForm = styled("form")(({ theme }) => ({
   position: "relative",
@@ -47,10 +47,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 type Props = {};
 
 const Search = (props: Props) => {
-  const { term, setTerm } = useSearch();
+  const { query, setQuery } = useSearchTerm();
 
   const handleTermChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTerm(event.target.value);
+    setQuery(event.target.value);
   };
 
   return (
@@ -61,7 +61,7 @@ const Search = (props: Props) => {
       <StyledInputBase
         placeholder="Search…"
         inputProps={{ "aria-label": "search" }}
-        value={term}
+        value={query}
         onChange={handleTermChange}
       />
     </StyledSearchForm>
