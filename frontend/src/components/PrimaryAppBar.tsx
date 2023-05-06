@@ -24,7 +24,7 @@ export default function PrimaryAppBar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     useState<null | HTMLElement>(null);
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, user } = useAuth();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -119,8 +119,14 @@ export default function PrimaryAppBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem component={Link} to="/wishlist">
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
+        <IconButton
+          size="large"
+          aria-label={
+            "show" + (user?.wishlist?.length || "0") + " favorite items"
+          }
+          color="inherit"
+        >
+          <Badge badgeContent={user?.wishlist?.length} color="error">
             <FavoriteIcon />
           </Badge>
         </IconButton>
@@ -129,10 +135,10 @@ export default function PrimaryAppBar() {
       <MenuItem component={Link} to="/shopping-cart">
         <IconButton
           size="large"
-          aria-label="show 17 new notifications"
+          aria-label={"show" + (user?.cart?.length || "0") + " cart items"}
           color="inherit"
         >
-          <Badge badgeContent={17} color="error">
+          <Badge badgeContent={user?.cart?.length} color="error">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
@@ -179,10 +185,12 @@ export default function PrimaryAppBar() {
               component={Link}
               to="/wishlist"
               size="large"
-              aria-label="show 4 favorite items"
+              aria-label={
+                "show" + (user?.wishlist?.length || 0) + "favorite items"
+              }
               color="inherit"
             >
-              <Badge badgeContent={4} color="error">
+              <Badge badgeContent={user?.wishlist?.length} color="error">
                 <FavoriteIcon />
               </Badge>
             </IconButton>
@@ -190,10 +198,10 @@ export default function PrimaryAppBar() {
               component={Link}
               to="/shopping-cart"
               size="large"
-              aria-label="show 17 items in shopping cart"
+              aria-label={"show" + (user?.cart?.length || "0") + " cart items"}
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={user?.cart?.length} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
