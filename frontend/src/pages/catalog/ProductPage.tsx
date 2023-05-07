@@ -3,16 +3,16 @@ import { useParams } from "react-router-dom";
 import { useAxios } from "../../hooks/useAxios";
 import { ProductType } from "../../utils/types";
 
-const useGetProductDetails = (productId: string | undefined) => {
+const useGetProductDetails = (id: string | undefined) => {
   const [item, setItem] = useState<ProductType | undefined>(undefined);
   const { get } = useAxios();
 
   useEffect(() => {
     const getProductDetails = async () => {
-      console.log(productId);
+      console.log(id);
 
       try {
-        const res = await get(`/products/${productId}`);
+        const res = await get(`/products/${id}`);
         if (res) {
           setItem(res.data.data);
         }
@@ -20,20 +20,22 @@ const useGetProductDetails = (productId: string | undefined) => {
         setItem(undefined);
       }
     };
-    if (productId) getProductDetails();
-  }, [get, productId]);
+    if (id) getProductDetails();
+  }, [get, id]);
   return item;
 };
 
 type Props = {};
 
 function ProductPage({}: Props) {
-  let { productId } = useParams<{ productId: string }>();
-  const item = useGetProductDetails(productId);
-
+  const { id } = useParams<{ id: string }>();
+  const item = useGetProductDetails(id);
+  useEffect(() => {
+    console.log("file: ProductPage.tsx:36 ~ useEffect ~ I render");
+  });
   return (
     <div>
-      Product #{productId}
+      Product #{id}
       <p>{item?.id}</p>
     </div>
   );

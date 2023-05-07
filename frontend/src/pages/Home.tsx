@@ -1,6 +1,6 @@
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import Products from "./Products/Products";
+import ProductsGallery from "./catalog/ProductsGallery";
 
 type Props = {};
 
@@ -11,7 +11,7 @@ const Home = (props: Props) => {
         home page promotions
       </Typography>
       <Divider variant="middle" />
-      <Products />
+      <ProductsGallery />
     </div>
   );
 };

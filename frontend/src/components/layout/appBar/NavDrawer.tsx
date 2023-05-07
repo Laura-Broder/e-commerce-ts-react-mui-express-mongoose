@@ -39,12 +39,7 @@ function ListItemLink({ primary, to, selected }: ListItemLinkProps) {
 
 export default function NavDrawer() {
   const [isOpen, setIsOpen] = useState(false);
-  const routeMatch = useRouteMatch([
-    "/",
-    "/about",
-    "/products",
-    "/products/:productId",
-  ]);
+  const routeMatch = useRouteMatch(["/", "/about", "/catalog", "/catalog/:id"]);
   const currentRoute = routeMatch?.pattern?.path;
 
   const toggleDrawer =
@@ -93,10 +88,10 @@ export default function NavDrawer() {
               selected={currentRoute === "/about"}
             />
             <ListItemLink
-              key="products"
-              to="/products"
-              primary="Products"
-              selected={currentRoute?.includes("/products")}
+              key="catalog"
+              to="/catalog"
+              primary="Catalog"
+              selected={currentRoute?.includes("/catalog")}
             />
           </List>
         </Box>

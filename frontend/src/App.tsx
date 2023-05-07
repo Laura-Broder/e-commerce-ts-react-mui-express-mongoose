@@ -2,11 +2,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import ContextProvider from "./hooks/context/context";
 import About from "./pages/About";
+import Catalog from "./pages/catalog/Catalog";
+import ProductPage from "./pages/catalog/ProductPage";
+import ProductsGallery from "./pages/catalog/ProductsGallery";
 import Checkout from "./pages/checkout/Checkout";
 import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
-import ProductPage from "./pages/Products/ProductPage";
-import Products from "./pages/Products/Products";
 import Root from "./pages/Root";
 import ShoppingCart from "./pages/ShoppingCart";
 import SignIn from "./pages/SignIn";
@@ -47,13 +48,13 @@ const router = createBrowserRouter([
             element: <Wishlist />,
           },
           {
-            path: "/products",
-            // element: <Products />,
+            path: "/catalog",
+            element: <Catalog />,
             children: [
-              { index: true, element: <Products /> },
+              { index: true, element: <ProductsGallery /> },
 
               {
-                path: "/products/:productId",
+                path: "/catalog/:id",
                 element: <ProductPage />,
               },
             ],

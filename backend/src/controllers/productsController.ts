@@ -53,10 +53,10 @@ export const getProduct: RequestHandler = async (
     );
   } else {
     try {
-      const { productId } = req.params as unknown as {
-        productId: string | number;
+      const { id } = req.params as unknown as {
+        id: string | number;
       };
-      const searchRes = await getPlantDetails(productId);
+      const searchRes = await getPlantDetails(id);
       // console.log(
       //   "file: productsController.ts:47 ~ searchRes:",
       //   searchRes.data

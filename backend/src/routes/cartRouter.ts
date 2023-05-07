@@ -1,9 +1,9 @@
-import express from 'express';
-import { auth } from '../middleware/userValidator';
+import express from "express";
+import { auth } from "../middleware/userValidator";
 
 const cartRouter = express.Router();
 
-cartRouter.patch("/:productId", auth);
-cartRouter.delete("/:productId", auth);
+cartRouter.patch("/:id", auth);
+cartRouter.delete("/:id", auth);
 
 export default cartRouter;

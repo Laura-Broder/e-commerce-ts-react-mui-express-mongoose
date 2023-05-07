@@ -23,7 +23,7 @@ export const validateQuery = checkSchema(
 
 export const validateParams = checkSchema(
   {
-    productId: { isNumeric: true },
+    id: { isNumeric: true },
   },
   ["params"]
 );

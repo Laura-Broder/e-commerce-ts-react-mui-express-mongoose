@@ -7,9 +7,12 @@ import { useAxios } from "../../hooks/useAxios";
 
 type Props = {};
 
-const Products = (props: Props) => {
+const ProductsGallery = (props: Props) => {
   const { searchResults, setSearchResults, query } = useContext(appContext);
   const { get } = useAxios();
+  // useEffect(() => {
+  //   console.log("file: Products.tsx:14 ~ useEffect ~ I render");
+  // });
   const getPage = async (_event: ChangeEvent<unknown>, page: number) => {
     const params = {
       q: query,
@@ -38,4 +41,4 @@ const Products = (props: Props) => {
   );
 };
 
-export default Products;
+export default ProductsGallery;

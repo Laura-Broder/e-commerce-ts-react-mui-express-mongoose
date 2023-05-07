@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { appContext } from "../hooks/context/context";
 import useCart from "../hooks/useCart";
 import useWishlist from "../hooks/useWishlist";
-import ProductPreview from "../pages/Products/ProductPreview";
+import ProductPreview from "../pages/catalog/ProductPreview";
 import { ProductType } from "../utils/types";
 
 type Props = {
@@ -61,7 +61,7 @@ const Gallery = ({ items }: Props) => {
         ) : (
           items?.map((item: ProductType, index) => (
             <Card key={item.id}>
-              <CardActionArea onClick={() => navigate(`/products/${item.id}`)}>
+              <CardActionArea onClick={() => navigate(`/catalog/${item.id}`)}>
                 {item.imageUrl ? (
                   <CardMedia
                     component="img"
