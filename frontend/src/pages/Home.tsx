@@ -1,6 +1,6 @@
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import Products from "./Products";
+import Products from "./Products/Products";
 
 type Props = {};
 

@@ -2,7 +2,7 @@ import { useCallback, useContext, useMemo } from "react";
 import { removeJWT, setJWT } from "../utils/auth";
 import { AxiosInstance } from "../utils/axios";
 import { ISingInFormState } from "../utils/types";
-import { appContext } from "./context";
+import { appContext } from "./context/context";
 
 const useAuth = () => {
   const { user, setUser, clearUser } = useContext(appContext);

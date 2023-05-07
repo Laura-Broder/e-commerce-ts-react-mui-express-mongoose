@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Outlet } from "react-router-dom";
-import Footer from "../components/Footer";
 import GlobalAlert from "../components/GlobalAlert";
-import ScrollToTop from "../components/ScrollToTop";
-import PrimaryAppBar from "../components/appBar/PrimaryAppBar";
+import Footer from "../components/layout/Footer";
+import ScrollToTop from "../components/layout/ScrollToTop";
+import PrimaryAppBar from "../components/layout/appBar/PrimaryAppBar";
 import useGlobalAlert from "../hooks/useGlobalAlert";
 
 type Props = {};

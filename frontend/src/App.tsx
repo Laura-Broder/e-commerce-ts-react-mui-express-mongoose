@@ -1,16 +1,16 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-import Checkout from "./components/checkout/Checkout";
-import ProductPage from "./components/ProductPage";
-import ContextProvider from "./hooks/context";
-import About from "./routes/About";
-import ErrorPage from "./routes/ErrorPage";
-import Home from "./routes/Home";
-import Products from "./routes/Products";
-import Root from "./routes/Root";
-import ShoppingCart from "./routes/ShoppingCart";
-import SignIn from "./routes/SignIn";
-import Wishlist from "./routes/Wishlist";
+import ContextProvider from "./hooks/context/context";
+import About from "./pages/About";
+import Checkout from "./pages/checkout/Checkout";
+import ErrorPage from "./pages/ErrorPage";
+import Home from "./pages/Home";
+import ProductPage from "./pages/Products/ProductPage";
+import Products from "./pages/Products/Products";
+import Root from "./pages/Root";
+import ShoppingCart from "./pages/ShoppingCart";
+import SignIn from "./pages/SignIn";
+import Wishlist from "./pages/Wishlist";
 
 const router = createBrowserRouter([
   {
@@ -48,8 +48,10 @@ const router = createBrowserRouter([
           },
           {
             path: "/products",
-            element: <Products />,
+            // element: <Products />,
             children: [
+              { index: true, element: <Products /> },
+
               {
                 path: "/products/:productId",
                 element: <ProductPage />,

@@ -19,9 +19,9 @@ import Paper from "@mui/material/Paper";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
-import useCart from "../hooks/useCart";
-import useWishlist from "../hooks/useWishlist";
-import { ProductType } from "../utils/types";
+import useCart from "../../hooks/useCart";
+import useWishlist from "../../hooks/useWishlist";
+import { ProductType } from "../../utils/types";
 
 const style = {
   position: "absolute" as "absolute",

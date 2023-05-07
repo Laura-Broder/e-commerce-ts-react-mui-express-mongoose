@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { IListItem } from "../utils/types";
-import { appContext } from "./context";
+import { appContext } from "./context/context";
 import useAuth from "./useAuth";
 
 const useWishlist = () => {

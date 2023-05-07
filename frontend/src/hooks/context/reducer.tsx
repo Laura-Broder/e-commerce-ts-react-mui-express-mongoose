@@ -1,5 +1,5 @@
-import { deepCopy } from "../utils/helpers";
-import { IAction, IState } from "../utils/types";
+import { deepCopy } from "../../utils/helpers";
+import { IAction, IState } from "../../utils/types";
 
 const reducer = (state: IState, action: IAction): IState => {
   const newState: IState = deepCopy(state);

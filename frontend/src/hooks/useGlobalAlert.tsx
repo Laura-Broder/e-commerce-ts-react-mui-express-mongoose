@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AlertSeverityEnum } from "../utils/types";
-import { appContext } from "./context";
+import { appContext } from "./context/context";
 
 export enum GlobalAlertTypesEnum {
   GENERAL_SERVER_ERROR = "general_server_error",

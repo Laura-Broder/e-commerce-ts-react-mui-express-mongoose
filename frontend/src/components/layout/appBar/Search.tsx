@@ -1,8 +1,9 @@
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import { alpha, styled } from "@mui/material/styles";
-import { ChangeEvent } from "react";
-import useSearchTerm from "../../hooks/useSearchTerm";
+import { ChangeEvent, useContext, useEffect } from "react";
+import { appContext, emptySearchResults } from "../../../hooks/context/context";
+import { useAxios } from "../../../hooks/useAxios";
 
 const StyledSearchForm = styled("form")(({ theme }) => ({
   position: "relative",
@@ -69,3 +70,26 @@ const Search = (props: Props) => {
 };
 
 export default Search;
+
+const useSearchTerm = () => {
+  const { setSearchResults, query, setQuery } = useContext(appContext);
+  const { get } = useAxios();
+
+  useEffect(() => {
+    if (!query) {
+      setSearchResults(emptySearchResults);
+    } else {
+      const getData = setTimeout(async () => {
+        const params = {
+          q: query,
+        };
+        const searchRes = await get("/products", params);
+        setSearchResults(searchRes.data);
+      }, 500);
+
+      return () => clearTimeout(getData);
+    }
+  }, [get, setSearchResults, query]);
+
+  return { query, setQuery };
+};

@@ -19,17 +19,19 @@ import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useContext, useState } from "react";
-import { appContext } from "../hooks/context";
+import { useNavigate } from "react-router-dom";
+import { appContext } from "../hooks/context/context";
 import useCart from "../hooks/useCart";
 import useWishlist from "../hooks/useWishlist";
+import ProductPreview from "../pages/Products/ProductPreview";
 import { ProductType } from "../utils/types";
-import ProductPreview from "./ProductPreview";
 
 type Props = {
   items?: ProductType[];
 };
 
 const Gallery = ({ items }: Props) => {
+  const navigate = useNavigate();
   const [itemToPreview, setItemToPreview] = useState<number | undefined>(
     undefined
   );
@@ -59,7 +61,7 @@ const Gallery = ({ items }: Props) => {
         ) : (
           items?.map((item: ProductType, index) => (
             <Card key={item.id}>
-              <CardActionArea>
+              <CardActionArea onClick={() => navigate(`/products/${item.id}`)}>
                 {item.imageUrl ? (
                   <CardMedia
                     component="img"

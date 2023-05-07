@@ -1,7 +1,8 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AxiosInstance, getToken } from "../utils/axios";
 
 export const useAxios = (withAuthHeaders?: boolean) => {
+  const [fetching, setFetching] = useState<boolean>(false);
   useEffect(() => {
     if (withAuthHeaders) {
       AxiosInstance.defaults.headers.common["Authorization"] = getToken();

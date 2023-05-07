@@ -21,8 +21,8 @@ export const getPlantsList = (params: IPlantListQueryParams) => {
   return perenualApi.get(url, { params });
 };
 
-export const getPlantDetails = (id: number) => {
-  const url = `/species/details-list/${id}`;
+export const getPlantDetails = (id: string | number) => {
+  const url = `/species/details/${id}`;
 
   return perenualApi.get(url);
 };

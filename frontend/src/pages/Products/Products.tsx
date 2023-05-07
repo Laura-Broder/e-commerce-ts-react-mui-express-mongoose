@@ -1,9 +1,9 @@
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { ChangeEvent, useContext } from "react";
-import Gallery from "../components/Gallery";
-import { appContext } from "../hooks/context";
-import { useAxios } from "../hooks/useAxios";
+import Gallery from "../../components/Gallery";
+import { appContext } from "../../hooks/context/context";
+import { useAxios } from "../../hooks/useAxios";
 
 type Props = {};
 

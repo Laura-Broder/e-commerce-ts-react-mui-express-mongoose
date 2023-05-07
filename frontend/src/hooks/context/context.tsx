@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useCallback, useReducer } from "react";
-import { IGlobalAlert, IPlantListRes, IState, IUser } from "../utils/types";
+import { IGlobalAlert, IPlantListRes, IState, IUser } from "../../utils/types";
 import reducer from "./reducer";
 
 interface IContextState extends IState {
